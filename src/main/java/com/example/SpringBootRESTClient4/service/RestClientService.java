@@ -7,6 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class RestClientService {
@@ -28,5 +32,36 @@ public class RestClientService {
                         .header("Actor", "test")
                         .retrieve()
                         .body(OrderResponse.class);
+    }
+
+    public OrderResponse getOrder42Client(String month, String colour,
+                                         String parmRequestSource,
+                                         String parmAudienceType,
+                                         @RequestBody OrderRequestForm orderRequestForm) {
+        String endpoint = "/getOrder4/";
+
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("parmRequestSource", parmRequestSource);
+        queryParams.put("parmAudienceType", parmAudienceType);
+
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(endpoint);
+        queryParams.forEach(uriComponentsBuilder::queryParam);
+
+        Map<String, String> pathParams = new HashMap<>();
+        pathParams.put("month", month);
+        pathParams.put("colour", colour);
+
+        var orderResponse =
+                restClient
+                        .post()
+                        .uri(uriComponentsBuilder.encode().toUriString(), pathParams)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .body(orderRequestForm)
+                        .header("Authorization","Basic YWJoaWtnaDp3ZWxjb21lQDFh")
+                        .header("Actor", "test")
+                        .retrieve()
+                        .body(OrderResponse.class);
+
+        return orderResponse;
     }
 }
