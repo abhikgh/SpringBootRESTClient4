@@ -75,23 +75,18 @@ public class RestClientService {
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("parmRequestSource", parmRequestSource);
         queryParams.put("parmAudienceType", parmAudienceType);
-        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(endpoint);
-        queryParams.forEach(uriComponentsBuilder::queryParam);
 
         Map<String, String> pathParams = new HashMap<>();
         pathParams.put("month", month);
         pathParams.put("colour", colour);
 
-        URI uri = UriComponentsBuilder
-                .fromUriString(endpoint)
-                .buildAndExpand(pathParams)
-                .encode()
-                .toUri();
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(endpoint);
+        queryParams.forEach(uriComponentsBuilder::queryParam);
 
         return
                 restClient
                         .post()
-                        .uri(uri)
+                        .uri(uriComponentsBuilder.encode().toUriString(), pathParams)
                         .accept(MediaType.APPLICATION_JSON)
                         .body(orderRequestForm)
                         .header("Authorization","Basic YWJoaWtnaDp3ZWxjb21lQDFh")
