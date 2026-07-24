@@ -102,7 +102,7 @@ public class RestClientService {
                                           String parmRequestSource,
                                           String parmAudienceType,
                                           @RequestBody OrderRequestForm orderRequestForm) {
-        String endpoint = "http://localhost:8092/orders/v1/getOrder4/{month}/{colour}";
+        String endpoint = "/getOrder4/{month}/{colour}";
 
         var queryParams = CollectionUtils.toMultiValueMap(Map.of("parmRequestSource", Collections.singletonList(parmRequestSource),
                 "parmAudienceType", Collections.singletonList(parmAudienceType)));
