@@ -52,7 +52,7 @@ public class RestController {
             @PathVariable(value = "colour") String colour,
             @RequestParam(value = "parmRequestSource") String parmRequestSource,
             @RequestParam(value = "parmAudienceType", required = false) String parmAudienceType,
-           @RequestBody OrderRequestForm orderRequestForm) throws Exception {
+            @RequestBody OrderRequestForm orderRequestForm) throws Exception {
 
         OrderResponse orderResponse = restClientService.getOrder4Client(month, colour, parmRequestSource, parmAudienceType, orderRequestForm);
         return ResponseEntity
@@ -131,6 +131,44 @@ public class RestController {
             @RequestBody OrderRequestForm orderRequestForm) throws Exception {
 
         OrderResponse orderResponse = restClientService.getOrder43Client(month, colour, parmRequestSource, parmAudienceType, orderRequestForm);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(orderResponse);
+    }
+
+    /*URL : http://localhost:8192/orders/v1/getOrder4Client/Feb/red?parmRequestSource=web&parmAudienceType=external
+POST
+Header : Authorization 	 Basic YWJoaWtnaDp3ZWxjb21lQDFh
+        Actor  test
+Body:
+{
+ "orderId" : 100,
+ "location" : "Kolkata",
+ "invoiceType" : 2,
+ "orderItems" : [ {
+   "itemId" : 1001,
+   "itemName" : "iPhoneX",
+   "quantity" : 2
+ }, {
+   "itemId" : 1002,
+   "itemName" : "iPad",
+   "quantity" : 2
+ }, {
+   "itemId" : 1003,
+   "itemName" : "LED TV",
+   "quantity" : 2
+ } ]
+}
+*/
+    @PostMapping(value = "/getOrder44Client/{month}/{colour}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderResponse> getOrder44Client(
+            @PathVariable(value = "month") String month,
+            @PathVariable(value = "colour") String colour,
+            @RequestParam(value = "parmRequestSource") String parmRequestSource,
+            @RequestParam(value = "parmAudienceType", required = false) String parmAudienceType,
+            @RequestBody OrderRequestForm orderRequestForm) throws Exception {
+
+        OrderResponse orderResponse = restClientService.getOrder44Client(month, colour, parmRequestSource, parmAudienceType, orderRequestForm);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(orderResponse);
