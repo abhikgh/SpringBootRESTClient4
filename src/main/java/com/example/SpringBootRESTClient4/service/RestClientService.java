@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,23 +39,30 @@ public class RestClientService {
                                          String parmRequestSource,
                                          String parmAudienceType,
                                          @RequestBody OrderRequestForm orderRequestForm) {
-        String endpoint = "/getOrder4/";
+        String endpoint = "http://localhost:8092/orders/v1/getOrder4/{month}/{colour}";
 
-        Map<String, String> queryParams = new HashMap<>();
+     /*   Map<String, String> queryParams = new HashMap<>();
         queryParams.put("parmRequestSource", parmRequestSource);
         queryParams.put("parmAudienceType", parmAudienceType);
-
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(endpoint);
-        queryParams.forEach(uriComponentsBuilder::queryParam);
+       // queryParams.forEach(uriComponentsBuilder::queryParam);*/
 
         Map<String, String> pathParams = new HashMap<>();
         pathParams.put("month", month);
         pathParams.put("colour", colour);
 
-        var orderResponse =
+        URI uri = UriComponentsBuilder
+                .fromUriString(endpoint)
+                .queryParam("parmRequestSource", parmRequestSource)
+                .queryParam("parmAudienceType", parmAudienceType)
+                .buildAndExpand(pathParams)
+                .encode()
+                .toUri();
+
+        return
                 restClient
                         .post()
-                        .uri(uriComponentsBuilder.encode().toUriString(), pathParams)
+                        .uri(uri)
                         .accept(MediaType.APPLICATION_JSON)
                         .body(orderRequestForm)
                         .header("Authorization","Basic YWJoaWtnaDp3ZWxjb21lQDFh")
@@ -62,6 +70,5 @@ public class RestClientService {
                         .retrieve()
                         .body(OrderResponse.class);
 
-        return orderResponse;
     }
 }

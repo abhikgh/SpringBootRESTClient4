@@ -93,7 +93,6 @@ public class RestController {
             @RequestBody OrderRequestForm orderRequestForm) throws Exception {
 
         OrderResponse orderResponse = restClientService.getOrder42Client(month, colour, parmRequestSource, parmAudienceType, orderRequestForm);
-        System.out.println("orderResponse :: " + orderResponse);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(orderResponse);
