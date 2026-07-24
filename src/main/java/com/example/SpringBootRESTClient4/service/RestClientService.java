@@ -3,6 +3,7 @@ package com.example.SpringBootRESTClient4.service;
 import com.example.SpringBootRESTClient4.model.OrderRequestForm;
 import com.example.SpringBootRESTClient4.model.OrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -111,14 +112,17 @@ public class RestClientService {
         pathParams.put("month", month);
         pathParams.put("colour", colour);
 
+        HttpHeaders httpHeaders = new HttpHeaders();
+        var headers = CollectionUtils.toMultiValueMap(Map.of("Authorization", Collections.singletonList("Basic YWJoaWtnaDp3ZWxjb21lQDFh"), "Actor", Collections.singletonList("test")));
+        httpHeaders.putAll(headers);
+
         return
                 restClient
                         .post()
                         .uri(UriComponentsBuilder.fromUriString(endpoint).queryParams(queryParams).encode().toUriString(), pathParams)
                         .accept(MediaType.APPLICATION_JSON)
                         .body(orderRequestForm)
-                        .header("Authorization","Basic YWJoaWtnaDp3ZWxjb21lQDFh")
-                        .header("Actor", "test")
+                        .headers(httpHeader -> httpHeader.addAll(httpHeaders))
                         .retrieve()
                         .body(OrderResponse.class);
 
