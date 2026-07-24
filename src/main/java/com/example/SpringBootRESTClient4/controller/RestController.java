@@ -47,14 +47,14 @@ public class RestController {
      }
     */
     @PostMapping(value = "/getOrder4Client/{month}/{colour}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OrderResponse> getOrder2Client(
+    public ResponseEntity<OrderResponse> getOrder4Client(
             @PathVariable(value = "month") String month,
             @PathVariable(value = "colour") String colour,
             @RequestParam(value = "parmRequestSource") String parmRequestSource,
             @RequestParam(value = "parmAudienceType", required = false) String parmAudienceType,
            @RequestBody OrderRequestForm orderRequestForm) throws Exception {
 
-        OrderResponse orderResponse = restClientService.getOrder2Client(month, colour, parmRequestSource, parmAudienceType, orderRequestForm);
+        OrderResponse orderResponse = restClientService.getOrder4Client(month, colour, parmRequestSource, parmAudienceType, orderRequestForm);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(orderResponse);

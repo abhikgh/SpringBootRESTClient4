@@ -14,7 +14,7 @@ public class RestClientService {
     @Autowired
     private RestClient restClient;
 
-    public OrderResponse getOrder2Client(String month, String colour,
+    public OrderResponse getOrder4Client(String month, String colour,
                                          String parmRequestSource,
                                          String parmAudienceType,
                                          @RequestBody OrderRequestForm orderRequestForm) {
