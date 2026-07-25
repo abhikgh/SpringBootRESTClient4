@@ -113,8 +113,7 @@ public class RestClientService {
         pathParams.put("colour", colour);
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        var headers = CollectionUtils.toMultiValueMap(Map.of("Authorization", Collections.singletonList("Basic YWJoaWtnaDp3ZWxjb21lQDFh"), "Actor", Collections.singletonList("test")));
-        httpHeaders.putAll(headers);
+        httpHeaders.putAll(CollectionUtils.toMultiValueMap(Map.of("Authorization", Collections.singletonList("Basic YWJoaWtnaDp3ZWxjb21lQDFh"), "Actor", Collections.singletonList("test"))));
 
         return
                 restClient
